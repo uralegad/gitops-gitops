@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage ('Check resource drift') {
       steps {
-       sh 'oc diff-k config | tee drift-report.txt' 
+       sh 'oc diff -k config | tee drift-report.txt' 
        sh '! test -s drift-report.txt'
       }
     }
@@ -22,7 +22,7 @@ pipeline {
     }
     success {
        sh 'rm drift-report.txt'
-       sh 'echo \' There is no configuration drift \' > no-drfit.txt'
+       sh 'echo \' There is no configuration drift \' > no-drift.txt'
        archiveArtifacts artifacts: '*.txt'
     }
   }
